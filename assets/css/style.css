@@ -1,0 +1,28 @@
+html {
+    height: 100%;
+    width: auto;
+}
+body {
+    height: 100%;
+    width: auto;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1;
+  }
+
+  .playlist {
+    border: 4px solid rgb(255, 255, 255);
+    height: 100px;
+    width: 33%;
+    padding: 0% 5px;
+    border-radius: 10px;
+    box-shadow: inset white 0px 0px 3px;
+  } 
+  footer {
+      position: absolute;
+      width: 100%;
+      height: 4%;
+      font-size: 12px;
+      font-style: italic;
+  }
