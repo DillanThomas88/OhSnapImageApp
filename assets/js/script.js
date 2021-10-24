@@ -19,3 +19,4 @@ function displayWeather(data) {
 
     document.querySelector("output").innerHTML = `<img src="http://openweathermap.org/img/wn/${icon}@2x.png">`;
 }
+
