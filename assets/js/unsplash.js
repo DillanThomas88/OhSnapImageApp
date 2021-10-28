@@ -3,7 +3,7 @@
 
 //settings
 const unsplashAPIKey = "QxYTrwYF42QoIJwscz21RwYQ6dVoUTJJOM_ChqhDXVI";
-const numberOfImages = 15;
+const numberOfImages = 30;
 const imageSize = "thumb"; //options are "raw", "full", "regular", "small", "thumb"
 
 //get images
@@ -21,7 +21,7 @@ async function showImagesFromKeyword(cssSelector, keyword){
 }
 //
 /**************************************/
-showImagesFromKeyword("main" , "rain");
+// showImagesFromKeyword("main" , "rain");
 
 
 
