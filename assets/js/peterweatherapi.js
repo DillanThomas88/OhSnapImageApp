@@ -1,24 +1,27 @@
+
+  
+
+
 const app = {
   init: () => {
     document
-      .getElementById('btnGet')
-      .addEventListener('click', app.fetchWeather);
-    document
-      .getElementById('btnCurrent')
-      .addEventListener('click', app.getLocation);
+    .getElementById('btnGet')
+    .addEventListener('click', app.fetchWeather);
+    // document
+    //   .getElementById('btnCurrent')
+    //   .addEventListener('click', app.getLocation);
   },
   fetchWeather: (ev) => {
     //use the values from latitude and longitude to fetch the weather
-    let lat = document.getElementById('latitude').value;
-    let lon = document.getElementById('longitude').value;
+    var city = document.querySelector('#inputField').value
     let key = 'bf7390e04b879494aa1ec79d4a3b6552'
     let lang = 'en';
-    let units = 'metric';
-    let url = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key}&units=${units}&lang=${lang}`;
+    // let url = `http://api.openweathermap.org/data/2.5/onecall?q=${city}&appid=${key}&lang=${lang}`;
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`
     //fetch the weather
     fetch(url)
       .then((resp) => {
-        if (!resp.ok) throw new Error(resp.statusText);
+        // if (!resp.ok) throw new Error(resp.statusText);
         return resp.json();
       })
       .then((data) => {

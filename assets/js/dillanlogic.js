@@ -130,7 +130,7 @@ function FetchAndSetPlaylists(weatherType, timeOfDay) {
     var weatherWeightPercentage = 75
 
     // gets random 'weather' related keyword
-    if (weatherType == 'sunny') {
+    if (weatherType == 'clear') {
         randomWeatherIndex = keyWords.sunny[Math.floor(Math.random() * keyWords.sunny.length)]
     } else if (weatherType == 'cloudy' || weatherType == 'partialy cloudy') {
         randomWeatherIndex = keyWords.cloudy[Math.floor(Math.random() * keyWords.cloudy.length)]
