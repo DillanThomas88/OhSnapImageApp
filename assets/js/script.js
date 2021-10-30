@@ -14,9 +14,8 @@ function getWeather() {
         .then(displayWeather);
 }
 function displayWeather(data) {
-   
+
     const icon = data.weather[0].icon;
 
     document.querySelector("output").innerHTML = `<img src="http://openweathermap.org/img/wn/${icon}@2x.png">`;
 }
-
