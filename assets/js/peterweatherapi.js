@@ -15,8 +15,6 @@ const app = {
     //use the values from latitude and longitude to fetch the weather
     var city = document.querySelector('#inputField').value
     let key = 'bf7390e04b879494aa1ec79d4a3b6552'
-    let lang = 'en';
-    // let url = `http://api.openweathermap.org/data/2.5/onecall?q=${city}&appid=${key}&lang=${lang}`;
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`
     //fetch the weather
     fetch(url)
@@ -25,7 +23,11 @@ const app = {
         return resp.json();
       })
       .then((data) => {
-        app.showWeather(data);
+        var weatherDescription = data.weather[0].main.toLowerCase();
+        console.log(data)
+        var time = moment().format('HH')
+        // FetchAndSetPlaylists(weatherDescription, time)
+        console.log(weatherDescription, time)
       })
       .catch(console.err);
   },

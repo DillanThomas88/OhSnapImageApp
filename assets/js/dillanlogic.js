@@ -1,7 +1,7 @@
 const playlistContainer = document.querySelector('#playlist-container')
 
 const keyWords = {
-    sunny: [
+    clear: [
         'sunny',
         'happy',
         'good vibes',
@@ -14,7 +14,10 @@ const keyWords = {
         'tanning',
         'summertime',
     ],
-    cloudy: [
+    haze: [
+        'haze',
+    ],
+    clouds: [
         'cloudy',
         'slow',
         'sad',
@@ -26,7 +29,7 @@ const keyWords = {
         'relaxed',
         'subdued',
     ],
-    overcast: [
+    fog: [
         'overcast',
         'melancholy',
         'depression',
@@ -37,7 +40,10 @@ const keyWords = {
         'hazy',
         'fog',
     ],
-    rain: [
+    dust: [
+        'dust',
+    ],
+    drizzle: [
         'rain',
         'love',
         'comfort',
@@ -53,36 +59,30 @@ const keyWords = {
     snow: [
         'snow',
         'cold',
-        'sweater',
         'freezing',
         'frigid',
         'snowy',
         'winter',
         'frozen',
-        'mountains',
+        'snowy mountains',
+        'ice',
+        
+    ],
+    thunderstorm: [
+        'lightning',
+        'thunder',
     ],
     morning: [
-        'morning',
-        'fresh',
-        'sunrise',
-        'dawn',
-        'rise',
-        'dew',
+        'wide',
+        'rising',
         'new',
-        'coffee',
-        'breakfast',
+        'clean',
     ],
     midDay: [
-        'noon',
-        'work',
-        'pumped up',
-        'working hard',
-        'lunch',
-        'sunny',
-        'sun',
-        'sweaty',
-        'heat',
-        'break',
+        'bright',
+        'contrast',
+        'colorful',
+        'energetic'
     ],
     evening: [
         'ease',
@@ -92,7 +92,6 @@ const keyWords = {
         'sundown',
         'sunset',
         'chill',
-        'success',
         'relax',
         'golden hour'
     ],
@@ -103,22 +102,16 @@ const keyWords = {
         'melody',
         'chill',
         'lucid',
-        'midnight',
         'dark',
-        'sleepy',
-        'fireplace',
-        'bedtime',
-        'sleep',
-        'sleepytime',
         'lullaby',
         'sleep',
-        'pillow',
         'dreamy',
+        'fuzzy',
     ],
 
 }
 
-FetchAndSetPlaylists('rain', 8)
+// FetchAndSetPlaylists('rain', 8)
 
 
 function FetchAndSetPlaylists(weatherType, timeOfDay) {
@@ -131,16 +124,23 @@ function FetchAndSetPlaylists(weatherType, timeOfDay) {
 
     // gets random 'weather' related keyword
     if (weatherType == 'clear') {
-        randomWeatherIndex = keyWords.sunny[Math.floor(Math.random() * keyWords.sunny.length)]
-    } else if (weatherType == 'cloudy' || weatherType == 'partialy cloudy') {
-        randomWeatherIndex = keyWords.cloudy[Math.floor(Math.random() * keyWords.cloudy.length)]
-    } else if (weatherType == 'overcast') {
-        randomWeatherIndex = keyWords.overcast[Math.floor(Math.random() * keyWords.overcast.length)]
-    } else if (weatherType == 'rain') {
-        randomWeatherIndex = keyWords.rain[Math.floor(Math.random() * keyWords.rain.length)]
+        randomWeatherIndex = keyWords.clear[Math.floor(Math.random() * keyWords.clear.length)]
+    } else if (weatherType == 'clouds') {
+        randomWeatherIndex = keyWords.clouds[Math.floor(Math.random() * keyWords.clouds.length)]
+    } else if (weatherType == 'fog') {
+        randomWeatherIndex = keyWords.fog[Math.floor(Math.random() * keyWords.fog.length)]
+    } else if (weatherType == 'rain' || weatherType == 'drizzle') {
+        randomWeatherIndex = keyWords.drizzle[Math.floor(Math.random() * keyWords.drizzle.length)]
     } else if (weatherType == 'snow') {
         randomWeatherIndex = keyWords.snow[Math.floor(Math.random() * keyWords.snow.length)]
+    } else if (weatherType == 'thunderstorm') {
+        randomWeatherIndex = keyWords.thunderstorm[Math.floor(Math.random() * keyWords.thunderstorm.length)]
+    } else if (weatherType == 'haze') {
+        randomWeatherIndex = keyWords.haze[Math.floor(Math.random() * keyWords.haze.length)]
+    } else if (weatherType == 'dust') {
+        randomWeatherIndex = keyWords.dust[Math.floor(Math.random() * keyWords.dust.length)]
     }
+    
 
     // gets random 'time of day' related keyword
     if (timeOfDay >= 6 && timeOfDay < 11) {
