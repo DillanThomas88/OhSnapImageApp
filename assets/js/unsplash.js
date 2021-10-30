@@ -1,4 +1,3 @@
-/**************************************/
 /* DO NOT TOUCH!!! ********************/
 
 //settings
@@ -7,15 +6,15 @@ const numberOfImages = 30;
 const imageSize = "thumb"; //options are "raw", "full", "regular", "small", "thumb"
 
 //get images
-async function getImagesFromKeyword(keyword){
+async function getImagesFromKeyword(keyword) {
 	const url = `https://api.unsplash.com/photos/random?client_id=${unsplashAPIKey}&count=${numberOfImages}&query=${keyword}`;
-  	const response = await fetch(url);
-  	const json = await response.json();
-  	const images = json.map(image => `<img src="${image.urls[imageSize]}" />`);
-  	return images.join("");
+	const response = await fetch(url);
+	const json = await response.json();
+	const images = json.map(image => `<img src="${image.urls[imageSize]}" />`);
+	return images.join("");
 }
 
-async function showImagesFromKeyword(cssSelector, keyword){
+async function showImagesFromKeyword(cssSelector, keyword) {
 	const imageResults = await getImagesFromKeyword(keyword);
 	document.querySelector(cssSelector).innerHTML = imageResults;
 }
@@ -25,10 +24,10 @@ async function showImagesFromKeyword(cssSelector, keyword){
 
 
 
-/* how to use: 
+/* how to use:
 	-- decide where images will go via its CSS selector (# for id, . (dot) for class, tag name, etc.)
-    -- decide (or look up) keyword as a string
-    -- call showImagesFromKeyword(cssSelector, keyword);
+	-- decide (or look up) keyword as a string
+	-- call showImagesFromKeyword(cssSelector, keyword);
 */
 
 
