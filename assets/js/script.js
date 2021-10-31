@@ -1,5 +1,10 @@
 const playlistContainer = document.querySelector('#playlist-container')
+const unsplashAPIKey = "QxYTrwYF42QoIJwscz21RwYQ6dVoUTJJOM_ChqhDXVI";
+const numberOfImages = 30;
+const imageSize = "regular"; //options are "raw", "full", "regular", "small", "thumb"
+
 var time = document.querySelector('#time')
+
 var randomWeatherIndex = 'colors'
 var randomTimeIndex = 'epic'
 const keyWords = {
@@ -112,18 +117,14 @@ const keyWords = {
     ],
     
 }
-/* DO NOT TOUCH!!! ********************/
 
-//settings
-const unsplashAPIKey = "QxYTrwYF42QoIJwscz21RwYQ6dVoUTJJOM_ChqhDXVI";
-const numberOfImages = 30;
-const imageSize = "regular"; //options are "raw", "full", "regular", "small", "thumb"
+// Functions/APIs---------------------------------------------------
 
+// UnsplashAPI------------------------------------------------------
 UpdateTime()
 function UpdateTime(){
     time.textContent = moment().format('hh:mma')
     document.querySelectorAll('img').style = 'opacity: 0.1'
-    // console.log(document.querySelectorAll('img'))
     var t = setInterval(function(){
         clearInterval(t)
         UpdateTime()
@@ -144,10 +145,8 @@ async function showImagesFromKeyword(cssSelector, keyword) {
 }
 
 
-// FetchAndSetPlaylists('rain', 8)
-
+// Search-Perameter-logic--------------------------------------
 function FetchAndSetPlaylists(weatherType, timeOfDay) {
-    // generate a number of random playlists based on weathertype & timeofday
     var weatherWeightPercentage = 75
 
     // gets random 'weather' related keyword
@@ -181,12 +180,14 @@ function FetchAndSetPlaylists(weatherType, timeOfDay) {
         randomTimeIndex = keyWords.night[Math.floor(Math.random() * keyWords.night.length)]
     }
 
-    // creates element with obtained playlist info and append
+    // passes search params to unplashAPI function + html append
     showImagesFromKeyword("#playlist-container", randomWeatherIndex + " " + randomTimeIndex);
     console.log(randomWeatherIndex + " " + randomTimeIndex)
 }
 
 
+
+// OpenWeatherAPI--------------------------------------
 const app = {
   init: () => {
     document
@@ -194,20 +195,21 @@ const app = {
     .addEventListener('click', app.fetchWeather);
     document
     .getElementById('svgs')
-    addEventListener('mousedown', FetchAndSetPlaylists(randomWeatherIndex, randomTimeIndex))
+    addEventListener('click', FetchAndSetPlaylists(randomWeatherIndex, randomTimeIndex))
   },
   fetchWeather: (ev) => {
-    //use the values from latitude and longitude to fetch the weather
+    //use the input value to grab the city name
     var city = document.querySelector('#inputField').value
+    if(city == ''){return}
     let key = 'bf7390e04b879494aa1ec79d4a3b6552'
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`
-    //fetch the weather
+    //fetch the cities weather
     fetch(url)
       .then((resp) => {
-        // if (!resp.ok) throw new Error(resp.statusText);
         return resp.json();
       })
       .then((data) => {
+          //fetch the weather description for logic chain
         var weatherDescription = data.weather[0].main.toLowerCase();
         console.log(data)
         var time = moment().format('HH')
@@ -216,28 +218,9 @@ const app = {
       })
       .catch(console.err);
   },
-  getLocation: (ev) => {
-    let opts = {
-      enableHighAccuracy: true,
-      timeout: 1000 * 10, //10 seconds
-      maximumAge: 1000 * 60 * 5, //5 minutes
-    };
-    navigator.geolocation.getCurrentPosition(app.ftw, app.wtf, opts);
-  },
-  ftw: (position) => {
-    //got position
-    document.getElementById('latitude').value =
-      position.coords.latitude.toFixed(2);
-    document.getElementById('longitude').value =
-      position.coords.longitude.toFixed(2);
-  },
   wtf: (err) => {
     //geolocation failed
     console.error(err);
   },
-  showWeather: (resp) => {
-    console.log(resp);
-    let row = document.querySelector('.weather.row');
-}
 }
 app.init()
