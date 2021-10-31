@@ -6,31 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OhSnap!</title>
     <link rel="stylesheet" href="./assets/css/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-<body style="box-shadow: inset rgb(253, 253, 253) 0px 0px 15px;"  class="has-background-primary">
-    <section style="height: 10%; padding: 5% 1%;" class="section has-text-white-ter">
-        <div class="container columns is-mobile">
-            <h1 style="padding: 0% 0% 0% 5%" class="column is-one-quarter-mobile is-flex  is-justify-content-center is-align-items-center">
-                <img src="./assets/images/sunnycloud.png" alt="">
-            </h1>
-          <img class="column is-two-half-mobile is-flex  is-justify-content-center is-align-items-center" style="padding: 0% 5% 0% 2%; height: 75px;" src="./assets/images/uplift-light.png" alt="">
-          <h1 style="padding: 0% 5% 0% 0%" class="column is-one-quarter-mobile is-flex  is-justify-content-center is-align-items-center">1:37 pm</h1>
+<body style="background-color: rgb(63, 108, 253); color: rgb(243, 243, 243);">
+  <header style="position: fixed; display: flex; top: 1%; left: 1%; height: 6%; width: 100%;" >
+    <h1 class="text">OhSnap!</h1>
+    <section>
+        <div>
+          <!-- <h1>1:37 pm</h1> -->
         </div>
       </section>
-      <section style="height: 5%; width: 75%; padding: 4% 1% 1% 1%; " class="container has-text-white-ter is-flex ">
-        <div style="  border-bottom: 1px solid white;" class="container columns is-mobile is-flex is-justify-content-center is-align-items-center">
-            <input id="inputField" style="color: white; border: none; background: none; text-align: center; height: 100%; width: 100%;" type="text" placeholder="Oceanside, CA">
-            <button id="btnGet">Search</button>
+      <section>
+        <div>
+            <!-- <input id="inputField" style="color: white; border: none; background: none; text-align: center; height: 25px; width: 400px;" type="text" placeholder="Enter a city name">
+            <button id="btnGet">Search</button> -->
 
         </div>
       </section>
       <section style=" width: 100%; height: 80%; padding: 7% 3% 5% 3%;" class="container has-text-white-ter is-flex has-background-white">
-        <div id="playlist-container" style="background-color: none; padding: 0% 3% 5% 3%;" class="container columns is-mobile is-flex is-flex-wrap-wrap is-justify-content-flex-start is-align-content-flex-start">        
+        <div id="playlist-container">        
         </div>
       </section>
-      <footer style="position: fixed; z-index: 10;"class="is-flex is-justify-content-center is-align-items-flex-end has-text-white-ter is-flex">OhSnap@ Copyright 2021</footer>
+
+
+
+
+
+      <footer style="position: fixed; bottom: 0%; display: flex; justify-content: center;">OhSnap@ Copyright 2021</footer>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
       <script src="./assets/js/peterweatherapi.js"></script>
       <script src="./assets/js/davisupsplashapi.js"></script>
