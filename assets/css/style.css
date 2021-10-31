@@ -5,10 +5,18 @@ html {
 body {
     height: 100%;
     width: auto;
+    box-shadow: inset rgba(255, 255, 255, 0.609) 0px 1px 60px;
+    
 }
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: white;
+h1 {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+input::placeholder  { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(245, 245, 245, 0.349);
+    font-style: italic;
     opacity: 1;
+    letter-spacing: .5px;
+    font-weight: 500;
   }
 
   .playlist {
@@ -26,3 +34,31 @@ body {
       font-size: 12px;
       font-style: italic;
   }
+#time {
+    z-index: 20;
+    color: rgb(243, 243, 243);
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 65px;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 100;
+}
+  .huepitch {
+      /* filter: grayscale(100%); */
+      animation: hue 30s infinite alternate;
+  }
+  @keyframes hue {
+    from {
+        filter: hue-rotate(-50deg);
+
+    }
+    to {
+        filter: hue-rotate(150deg)
+    }
+    
+}
+
+svg:active {
+    fill: rgba(184, 184, 184, 0.911);
+}
