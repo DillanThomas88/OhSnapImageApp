@@ -122,6 +122,8 @@ const imageSize = "regular"; //options are "raw", "full", "regular", "small", "t
 UpdateTime()
 function UpdateTime(){
     time.textContent = moment().format('hh:mma')
+    document.querySelectorAll('img').style = 'opacity: 0.1'
+    // console.log(document.querySelectorAll('img'))
     var t = setInterval(function(){
         clearInterval(t)
         UpdateTime()

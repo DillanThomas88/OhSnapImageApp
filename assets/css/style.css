@@ -50,7 +50,7 @@ input::placeholder  { /* Chrome, Firefox, Opera, Safari 10.1+ */
   }
   @keyframes hue {
     from {
-        filter: hue-rotate(-60deg);
+        filter: hue-rotate(-50deg);
 
     }
     to {
