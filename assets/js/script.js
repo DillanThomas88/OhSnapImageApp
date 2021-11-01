@@ -12,7 +12,7 @@ function RemovePlayerData(){
     imagecontainer = ''
     var data = document.querySelectorAll('.artist-data')
     data.forEach(element => {
-        element.remove()        
+        element.remove()
     });
     imageData.imgLink = []
     imageData.name = []
