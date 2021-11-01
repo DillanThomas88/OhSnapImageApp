@@ -2,7 +2,6 @@ const playlistContainer = document.querySelector('#playlist-container')
 const unsplashAPIKey = "QxYTrwYF42QoIJwscz21RwYQ6dVoUTJJOM_ChqhDXVI";
 const numberOfImages = 30;
 const imageSize = "regular"; //options are "raw", "full", "regular", "small", "thumb"
-
 var imagecontainer = ''
 var time = document.querySelector('#time')
 
@@ -12,8 +11,11 @@ CheckImages()
 
 // stores all temporary html fetch data
 var imageData = {
-    htmlLink: [],
-    name: []    
+    imgLink: [],
+    name: [],
+    profileLink: [],
+    bio: [],
+    unsplashlink: 'https://unsplash.com/',
 }
 
 // continually check for fetched images - if found, then stop updating and run next function
@@ -30,26 +32,30 @@ function GetHTMLLinks(image) {
     var tempArray = string.split('"')
     for (let i = 0; i < tempArray.length; i++) {
         const element = tempArray[i];
-        if(i%2 != 0){imageData.htmlLink.push(element)}
+        if(i%2 != 0){imageData.imgLink.push(element)}
     }
-    AppendImages(imageData.htmlLink)
+    AppendImages(imageData.imgLink)
 }
 
 // append to the page
 function AppendImages(objectArray){
     var container = document.querySelector('#playlist-container')
     objectArray.forEach(element => {
-        var div = document.createElement('div')
+        var div = document.createElement('div')     
         var img = document.createElement('img')
         img.setAttribute('src', element)
         img.setAttribute('alt','temporary description')
+        img.addEventListener('click', ArtistCard)
         div.append(img)
         container.append(div)
-        // console.log(div)
     });
+    console.log(imageData)
 }
 
-
+function ArtistCard(e){
+    var target = e.target
+    target.style.filter = 'blur(5px)'
+}
 
 
 
@@ -183,6 +189,10 @@ async function getImagesFromKeyword(keyword) {
     const response = await fetch(url);
     const json = await response.json();
     const images = json.map(image => `<img src="${image.urls[imageSize]}" />`);
+    imageData.name = json.map(image => `${image.user['name']}`);
+    imageData.profileLink = json.map(image => `${image.user.links.html}`);
+    imageData.bio = json.map(image => `${image.user.bio}`);
+
     return images.join("");
 }
 
