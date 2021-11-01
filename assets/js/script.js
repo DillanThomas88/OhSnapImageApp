@@ -8,6 +8,20 @@ var time = document.querySelector('#time')
 // start operations
 CheckImages()
 
+function RemovePlayerData(){
+    imagecontainer = ''
+    var data = document.querySelectorAll('.artist-data')
+    data.forEach(element => {
+        element.remove()        
+    });
+    imageData.imgLink = []
+    imageData.name = []
+    imageData.profileLink = []
+    imageData.bio = []
+    CheckImages()
+    
+}
+
 
 // stores all temporary html fetch data
 var imageData = {
@@ -43,6 +57,7 @@ function AppendImages(objectArray){
     objectArray.forEach(element => {
         var div = document.createElement('div')     
         var img = document.createElement('img')
+        div.classList.add('artist-data')
         img.setAttribute('src', element)
         img.setAttribute('alt','temporary description')
         img.addEventListener('click', ArtistCard)
@@ -257,6 +272,7 @@ const app = {
         addEventListener('click', FetchAndSetPlaylists(randomWeatherIndex, randomTimeIndex))
     },
     fetchWeather: (ev) => {
+        RemovePlayerData()
         //use the input value to grab the city name
         var city = document.querySelector('#inputField').value
         if (city == '') { return }
@@ -282,4 +298,6 @@ const app = {
         console.error(err);
     },
 }
+
+
 app.init()
