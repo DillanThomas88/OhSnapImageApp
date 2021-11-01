@@ -61,7 +61,6 @@ const keyWords = {
         'rainy',
         'umbrella',
         'puddles',
-        'raincoat',
     ],
     snow: [
         'snow',
@@ -128,7 +127,7 @@ function UpdateTime(){
     var t = setInterval(function(){
         clearInterval(t)
         UpdateTime()
-    },10)
+    },1000)
 }
 //get images
 async function getImagesFromKeyword(keyword) {
@@ -139,12 +138,15 @@ async function getImagesFromKeyword(keyword) {
 	return images.join("");
 }
 
-async function showImagesFromKeyword(cssSelector, keyword) {
+async function showImagesFromKeyword(container, keyword) {
 	const imageResults = await getImagesFromKeyword(keyword);
-	document.querySelector(cssSelector).innerHTML = imageResults;
+
+	document.querySelector(container).innerHTML = imageResults;
 }
 
-
+function CreateElement(image){
+    var div = document.qu
+}
 // Search-Perameter-logic--------------------------------------
 function FetchAndSetPlaylists(weatherType, timeOfDay) {
     var weatherWeightPercentage = 75
@@ -166,8 +168,7 @@ function FetchAndSetPlaylists(weatherType, timeOfDay) {
         randomWeatherIndex = keyWords.haze[Math.floor(Math.random() * keyWords.haze.length)]
     } else if (weatherType == 'dust') {
         randomWeatherIndex = keyWords.dust[Math.floor(Math.random() * keyWords.dust.length)]
-    }
-    
+    }   
 
     // gets random 'time of day' related keyword
     if (timeOfDay >= 6 && timeOfDay < 11) {
@@ -202,7 +203,7 @@ const app = {
     var city = document.querySelector('#inputField').value
     if(city == ''){return}
     let key = 'bf7390e04b879494aa1ec79d4a3b6552'
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`
     //fetch the cities weather
     fetch(url)
       .then((resp) => {
