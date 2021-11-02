@@ -4,122 +4,6 @@ const numberOfImages = 30;
 const imageSize = "regular"; //options are "raw", "full", "regular", "small", "thumb"
 var imagecontainer = ''
 var time = document.querySelector('#time')
-
-// start operations
-CheckImages()
-
-function RemoveCreatorData(){
-    imagecontainer = ''
-    var data = document.querySelectorAll('.artist-data')
-    data.forEach(element => {
-        element.remove()
-    });
-    artistData.imgLink = []
-    artistData.name = []
-    artistData.profileLink = []
-    artistData.bio = []
-    CheckImages()
-    
-}
-
-
-// stores all temporary html fetch data
-var artistData = {
-    imgLink: [],
-    name: [],
-    profileLink: [],
-    bio: [],
-    unsplashlink: 'https://unsplash.com/',
-}
-
-// continually check for fetched images - if found, then stop updating and run next function
-function CheckImages(){
-    var time = setInterval(function(){
-        if(imagecontainer == ''){clearInterval(time);CheckImages(); return }
-        else{ GetHTMLLinks(imagecontainer); clearInterval(time);}
-    },1)
-}
-
-// grab all fetched https URLs
-function GetHTMLLinks(image) {
-    var string = image.toString()
-    var tempArray = string.split('"')
-    for (let i = 0; i < tempArray.length; i++) {
-        const element = tempArray[i];
-        if(i%2 != 0){artistData.imgLink.push(element)}
-    }
-    AppendImages(artistData.imgLink)
-}
-
-// append to the page
-function AppendImages(objectArray){
-    var container = document.querySelector('#playlist-container')
-    var i = 0
-    objectArray.forEach(element => {
-        var div = document.createElement('div')     
-        var img = document.createElement('img')
-        var infodiv = document.createElement('div')
-        var name = document.createElement('h1')
-        var bio = document.createElement('p')    
-        var linkdiv = document.createElement('div')    
-        var artistlink = document.createElement('a')
-        var unsplashLink = document.createElement('a')
-        infodiv.style = ' display: none; box-shadow: #000 0px 0px 0px; position: absolute; z-index: 50; width: 100%; background-color: #0000007a; padding: 10px'
-        
-        name.style = 'pointer-events: none; text-shadow: #000 0px 0px 10px'
-        name.textContent = artistData.name[i]
-        infodiv.append(name)
-
-        bio.style = 'pointer-events: none; text-shadow: #000 0px 0px 5px; font-size: 11px; sp';
-        if(artistData.bio[i] == 'null'){artistData.bio[i] = artistData.name[i] + ' does not have a bio. :( Click "Visit Profile" to see get more details!'}
-        bio.textContent = artistData.bio[i]
-        infodiv.append(bio)
-        
-        artistlink.setAttribute('href', artistData.profileLink[i])
-        artistlink.textContent = 'Visit profile'
-        artistlink.style = 'display: flex; flex: 50%; justify-content: center; padding-top: 5px'
-        linkdiv.append(artistlink)
-        
-        unsplashLink.setAttribute('href', artistData.unsplashlink)
-        unsplashLink.textContent = 'UnSplash Website'
-        unsplashLink.style = 'display: flex; flex: 50%; justify-content: center; padding-top: 5px'
-        linkdiv.append(unsplashLink)
-        
-        linkdiv.style = 'display: flex; width: 100%; flex-direction: row; justify content: space-around'
-        infodiv.append(linkdiv)
-
-        div.append(infodiv)
-        div.classList.add('artist-data')
-        div.setAttribute('id', i)
-        img.setAttribute('src', element)
-        img.setAttribute('alt','temporary description')
-        img.addEventListener('click', ActivateArtistInformation)
-        div.append(img)
-        container.append(div)
-        i++
-    });
-}
-
-function DeactivateArtistInformation(e){
-    var target = e.target
-    target.parentNode.children[0].style.display = 'none'
-    // target.style.filter = 'blur(0px)'
-    target.removeEventListener('click', DeactivateArtistInformation )
-    target.addEventListener('click', ActivateArtistInformation)
-}
-function ActivateArtistInformation(e){
-    var target = e.target
-    target.parentNode.children[0].style.display = 'block'
-    // target.style.filter = 'blur(4px)'
-    target.removeEventListener('click', ActivateArtistInformation )
-    target.addEventListener('click', DeactivateArtistInformation)
-
-}
-
-
-
-var randomWeatherIndex = 'colors'
-var randomTimeIndex = 'epic'
 const keyWords = {
     clear: [
         'sunny',
@@ -230,19 +114,130 @@ const keyWords = {
 
 }
 
-// Functions/APIs---------------------------------------------------
+// init search values
+var randomWeatherIndex = 'colors'
+var randomTimeIndex = 'epic'
 
-// UnsplashAPI------------------------------------------------------
-// UpdateTime()
-// function UpdateTime() {
-//     time.textContent = moment().format('hh:mma')
-//     document.querySelectorAll('img').style = 'opacity: 0.1'
-//     var t = setInterval(function () {
-//         clearInterval(t)
-//         UpdateTime()
-//     }, 1000)
-// }
-//get images
+// start operations
+CheckImages()
+
+// stores all temporary html fetch data
+var artistData = {
+    imgLink: [],
+    name: [],
+    profileLink: [],
+    bio: [],
+    unsplashlink: 'https://unsplash.com/',
+}
+function RemoveCreatorData(){
+    imagecontainer = ''
+    var data = document.querySelectorAll('.artist-data')
+    data.forEach(element => {
+        element.remove()
+    });
+    artistData.imgLink = []
+    artistData.name = []
+    artistData.profileLink = []
+    artistData.bio = []
+    CheckImages()
+    
+}
+
+// continually check for fetched images - if found, then stop updating and run next function
+function CheckImages(){
+    var time = setInterval(function(){
+        if(imagecontainer == ''){clearInterval(time);CheckImages(); return }
+        else{ GetHTMLLinks(imagecontainer); clearInterval(time);}
+    },1)
+}
+
+// grab all fetched https URLs
+function GetHTMLLinks(image) {
+    var string = image.toString()
+    var tempArray = string.split('"')
+    for (let i = 0; i < tempArray.length; i++) {
+        const element = tempArray[i];
+        if(i%2 != 0){artistData.imgLink.push(element)}
+    }
+    // console.log(artistData.imgLink)
+    AppendImages(artistData.imgLink)
+}
+
+// append to the page
+function AppendImages(objectArray){
+    var container = document.querySelector('#playlist-container')
+    var i = 0
+    objectArray.forEach(element => {
+        var div = document.createElement('div')     
+        var img = document.createElement('img')
+        var infodiv = document.createElement('div')
+        var name = document.createElement('h1')
+        var bio = document.createElement('p')    
+        var linkdiv = document.createElement('div')    
+        var artistlink = document.createElement('a')
+        var unsplashLink = document.createElement('a')
+        
+        // append name
+        name.style = 'pointer-events: none; text-shadow: #000 0px 0px 10px'
+        name.textContent = artistData.name[i]
+        infodiv.append(name)
+
+        // append bio
+        bio.style = 'pointer-events: none; text-shadow: #000 0px 0px 5px; font-size: 11px; sp';
+        if(artistData.bio[i] == 'null'){artistData.bio[i] = artistData.name[i] + ' does not have a bio. :( Click "Visit Profile" to see get more details!'}
+        bio.textContent = artistData.bio[i]
+        infodiv.append(bio)
+        
+        // append artist link
+        artistlink.setAttribute('href', artistData.profileLink[i])
+        artistlink.textContent = 'Visit profile'
+        artistlink.style = 'display: flex; flex: 50%; justify-content: center; padding-top: 5px'
+        linkdiv.append(artistlink)
+        
+        // append unsplash link
+        unsplashLink.setAttribute('href', artistData.unsplashlink)
+        unsplashLink.textContent = 'UnSplash Website'
+        unsplashLink.style = 'display: flex; flex: 50%; justify-content: center; padding-top: 5px'
+        linkdiv.append(unsplashLink)
+        
+        // append link package to infodiv
+        linkdiv.style = 'display: flex; width: 100%; flex-direction: row; justify content: space-around'
+        infodiv.append(linkdiv)
+        
+        // append infodiv to individual artist container
+        infodiv.style = ' display: none; box-shadow: #000 0px 0px 0px; position: absolute; z-index: 50; width: 100%; background-color: #0000007a; padding: 10px'
+        div.append(infodiv)
+
+        // set extra
+        div.classList.add('artist-data')
+        div.setAttribute('id', i)
+        img.setAttribute('src', element)
+        img.setAttribute('alt','temporary description')
+        img.addEventListener('click', ActivateArtistInformation)
+        div.append(img)
+        container.append(div)
+        i++
+    });
+}
+
+//event listener to add/remove information
+function ActivateArtistInformation(e){
+    var target = e.target
+    target.parentNode.children[0].style.display = 'block'
+    // target.style.filter = 'blur(4px)'
+    target.removeEventListener('click', ActivateArtistInformation )
+    target.addEventListener('click', DeactivateArtistInformation)
+    console.log(artistData)
+}
+function DeactivateArtistInformation(e){
+    var target = e.target
+    target.parentNode.children[0].style.display = 'none'
+    // target.style.filter = 'blur(0px)'
+    target.removeEventListener('click', DeactivateArtistInformation )
+    target.addEventListener('click', ActivateArtistInformation)
+}
+
+// unplash API
 async function getImagesFromKeyword(keyword) {
     const url = `https://api.unsplash.com/photos/random?client_id=${unsplashAPIKey}&count=${numberOfImages}&query=${keyword}`;
     const response = await fetch(url);
@@ -254,7 +249,6 @@ async function getImagesFromKeyword(keyword) {
 
     return images.join("");
 }
-
 async function showImagesFromKeyword(container, keyword) {
     const imageResults = await getImagesFromKeyword(keyword);
     imagecontainer = imageResults
@@ -264,7 +258,7 @@ async function showImagesFromKeyword(container, keyword) {
 }
 
 
-// Search-Perameter-logic--------------------------------------
+// Search-Perameter-logic
 function FetchAndSetPlaylists(weatherType, timeOfDay) {
     var weatherWeightPercentage = 75
 
@@ -302,7 +296,7 @@ function FetchAndSetPlaylists(weatherType, timeOfDay) {
     showImagesFromKeyword("#playlist-container", randomWeatherIndex + " " + randomTimeIndex);
 }
 
-// OpenWeatherAPI--------------------------------------
+// OpenWeatherAPI
 const app = {
     init: () => {
         document
