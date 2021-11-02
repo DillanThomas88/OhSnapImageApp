@@ -103,14 +103,14 @@ function AppendImages(objectArray){
 function DeactivateArtistInformation(e){
     var target = e.target
     target.parentNode.children[0].style.display = 'none'
-    target.style.filter = 'blur(0px)'
+    // target.style.filter = 'blur(0px)'
     target.removeEventListener('click', DeactivateArtistInformation )
     target.addEventListener('click', ActivateArtistInformation)
 }
 function ActivateArtistInformation(e){
     var target = e.target
     target.parentNode.children[0].style.display = 'block'
-    target.style.filter = 'blur(4px)'
+    // target.style.filter = 'blur(4px)'
     target.removeEventListener('click', ActivateArtistInformation )
     target.addEventListener('click', DeactivateArtistInformation)
 
