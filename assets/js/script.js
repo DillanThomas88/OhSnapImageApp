@@ -8,23 +8,23 @@ var time = document.querySelector('#time')
 // start operations
 CheckImages()
 
-function RemovePlayerData(){
+function RemoveCreatorData(){
     imagecontainer = ''
     var data = document.querySelectorAll('.artist-data')
     data.forEach(element => {
         element.remove()
     });
-    imageData.imgLink = []
-    imageData.name = []
-    imageData.profileLink = []
-    imageData.bio = []
+    artistData.imgLink = []
+    artistData.name = []
+    artistData.profileLink = []
+    artistData.bio = []
     CheckImages()
     
 }
 
 
 // stores all temporary html fetch data
-var imageData = {
+var artistData = {
     imgLink: [],
     name: [],
     profileLink: [],
@@ -46,30 +46,74 @@ function GetHTMLLinks(image) {
     var tempArray = string.split('"')
     for (let i = 0; i < tempArray.length; i++) {
         const element = tempArray[i];
-        if(i%2 != 0){imageData.imgLink.push(element)}
+        if(i%2 != 0){artistData.imgLink.push(element)}
     }
-    AppendImages(imageData.imgLink)
+    AppendImages(artistData.imgLink)
 }
 
 // append to the page
 function AppendImages(objectArray){
     var container = document.querySelector('#playlist-container')
+    var i = 0
     objectArray.forEach(element => {
         var div = document.createElement('div')     
         var img = document.createElement('img')
+        var infodiv = document.createElement('div')
+        var name = document.createElement('h1')
+        var bio = document.createElement('p')    
+        var linkdiv = document.createElement('div')    
+        var artistlink = document.createElement('a')
+        var unsplashLink = document.createElement('a')
+        infodiv.style = ' display: none; box-shadow: #000 0px 0px 0px; position: absolute; z-index: 50; width: 100%; background-color: #0000007a; padding: 10px'
+        
+        name.style = 'pointer-events: none; text-shadow: #000 0px 0px 10px'
+        name.textContent = artistData.name[i]
+        infodiv.append(name)
+
+        bio.style = 'pointer-events: none; text-shadow: #000 0px 0px 5px; font-size: 11px; sp';
+        if(artistData.bio[i] == 'null'){artistData.bio[i] = artistData.name[i] + ' does not have a bio. :( Click "Visit Profile" to see get more details!'}
+        bio.textContent = artistData.bio[i]
+        infodiv.append(bio)
+        
+        artistlink.setAttribute('href', artistData.profileLink[i])
+        artistlink.textContent = 'Visit profile'
+        artistlink.style = 'display: flex; flex: 50%; justify-content: center; padding-top: 5px'
+        linkdiv.append(artistlink)
+        
+        unsplashLink.setAttribute('href', artistData.unsplashlink)
+        unsplashLink.textContent = 'UnSplash Website'
+        unsplashLink.style = 'display: flex; flex: 50%; justify-content: center; padding-top: 5px'
+        linkdiv.append(unsplashLink)
+        
+        linkdiv.style = 'display: flex; width: 100%; flex-direction: row; justify content: space-around'
+        infodiv.append(linkdiv)
+
+        div.append(infodiv)
         div.classList.add('artist-data')
+        div.setAttribute('id', i)
         img.setAttribute('src', element)
         img.setAttribute('alt','temporary description')
-        img.addEventListener('click', ArtistCard)
+        img.addEventListener('click', ActivateArtistInformation)
         div.append(img)
         container.append(div)
+        i++
     });
-    console.log(imageData)
 }
 
-function ArtistCard(e){
+function DeactivateArtistInformation(e){
     var target = e.target
-    target.style.filter = 'blur(5px)'
+    target.parentNode.children[0].style.display = 'none'
+    target.style.filter = 'blur(0px)'
+    target.removeEventListener('click', DeactivateArtistInformation )
+    target.addEventListener('click', ActivateArtistInformation)
+}
+function ActivateArtistInformation(e){
+    var target = e.target
+    target.parentNode.children[0].style.display = 'block'
+    target.style.filter = 'blur(4px)'
+    target.removeEventListener('click', ActivateArtistInformation )
+    target.addEventListener('click', DeactivateArtistInformation)
+
 }
 
 
@@ -189,24 +233,24 @@ const keyWords = {
 // Functions/APIs---------------------------------------------------
 
 // UnsplashAPI------------------------------------------------------
-UpdateTime()
-function UpdateTime() {
-    time.textContent = moment().format('hh:mma')
-    document.querySelectorAll('img').style = 'opacity: 0.1'
-    var t = setInterval(function () {
-        clearInterval(t)
-        UpdateTime()
-    }, 1000)
-}
+// UpdateTime()
+// function UpdateTime() {
+//     time.textContent = moment().format('hh:mma')
+//     document.querySelectorAll('img').style = 'opacity: 0.1'
+//     var t = setInterval(function () {
+//         clearInterval(t)
+//         UpdateTime()
+//     }, 1000)
+// }
 //get images
 async function getImagesFromKeyword(keyword) {
     const url = `https://api.unsplash.com/photos/random?client_id=${unsplashAPIKey}&count=${numberOfImages}&query=${keyword}`;
     const response = await fetch(url);
     const json = await response.json();
     const images = json.map(image => `<img src="${image.urls[imageSize]}" />`);
-    imageData.name = json.map(image => `${image.user['name']}`);
-    imageData.profileLink = json.map(image => `${image.user.links.html}`);
-    imageData.bio = json.map(image => `${image.user.bio}`);
+    artistData.name = json.map(image => `${image.user['name']}`);
+    artistData.profileLink = json.map(image => `${image.user.links.html}`);
+    artistData.bio = json.map(image => `${image.user.bio}`);
 
     return images.join("");
 }
@@ -256,10 +300,7 @@ function FetchAndSetPlaylists(weatherType, timeOfDay) {
 
     // passes search params to unplashAPI function + html append
     showImagesFromKeyword("#playlist-container", randomWeatherIndex + " " + randomTimeIndex);
-    console.log(randomWeatherIndex + " " + randomTimeIndex)
 }
-
-
 
 // OpenWeatherAPI--------------------------------------
 const app = {
@@ -272,7 +313,7 @@ const app = {
         addEventListener('click', FetchAndSetPlaylists(randomWeatherIndex, randomTimeIndex))
     },
     fetchWeather: (ev) => {
-        RemovePlayerData()
+        RemoveCreatorData()
         //use the input value to grab the city name
         var city = document.querySelector('#inputField').value
         if (city == '') { return }
